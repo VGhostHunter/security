@@ -1,4 +1,4 @@
-package com.dhy.security.browser.mapper;
+package com.dhy.security.browser.dao;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,4 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 public interface UserDao {
 
     UserDetails findUserByUsername(String username);
+
+    UserDetails findUserByMobile(String mobile);
 }

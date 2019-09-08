@@ -18,6 +18,8 @@ public class User implements UserDetails {
 
     private String username;
 
+    private String mobile;
+
     private String password;
 
     private Integer isExpired;
@@ -120,5 +122,13 @@ public class User implements UserDetails {
 
     public void setIsEnabled(Integer isEnabled) {
         this.isEnabled = isEnabled;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dhy.security.browser.mapper.UserDao">
+<mapper namespace="com.dhy.security.browser.dao.UserDao">
 
     <resultMap id="userMap" type="com.dhy.bean.User">
         <id property="id" column="user_id"/>
         <result property="username" column="username"/>
+        <result property="mobile" column="mobile"/>
         <result property="password" column="password"/>
         <result property="locked" column="locked"/>
         <result property="isEnabled" column="enabled"/>
@@ -21,5 +22,12 @@
         b.id authority_id, b.uid, b.authority
         FROM user a, authorities b
         WHERE a.username = #{username} AND a.id = b.uid
+    </select>
+
+    <select id="findUserByMobile" resultMap="userMap" parameterType="java.lang.String">
+        SELECT a.id user_id, a.username, a.password, a.locked, a.enabled, a.expired,
+        b.id authority_id, b.uid, b.authority
+        FROM user a, authorities b
+        WHERE a.mobile = #{mobile} AND a.id = b.uid
     </select>
 </mapper>

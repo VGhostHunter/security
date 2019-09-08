@@ -1,6 +1,8 @@
 package com.dhy.security.browser;
 
+import com.dhy.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.dhy.security.core.properties.SecurityProperties;
+import com.dhy.security.core.validate.code.SmsCodeFilter;
 import com.dhy.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +36,9 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationFailureHandler dhyAuthenticationFailureHandler;
 
     @Autowired
+    private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+    @Autowired
     private DataSource dataSource;
 
     @Autowired
@@ -60,7 +65,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
         validateCodeFilter.setSecurityProperties(securityProperties);
         validateCodeFilter.afterPropertiesSet();
 
-        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+        smsCodeFilter.setAuthenticationFailureHandler(dhyAuthenticationFailureHandler);
+        smsCodeFilter.setSecurityProperties(securityProperties);
+        smsCodeFilter.afterPropertiesSet();
+
+        http.addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                     .loginPage("/authentication/require")
                     .loginProcessingUrl("/authentication/form")
@@ -76,10 +87,11 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()    //下面的都是授权的配置
                 .antMatchers("/authentication/require",
                         securityProperties.getBrowser().getLoginPage(),
-                        "/code/image").permitAll()//这个页面不需要授权
+                        "/code/*").permitAll()//这个页面不需要授权
                 .anyRequest()           //任何请求
                 .authenticated()
                 .and()
-                .csrf().disable();       //都需要身份认证
+                .csrf().disable()       //都需要身份认证
+                .apply(smsCodeAuthenticationSecurityConfig);
     }
 }

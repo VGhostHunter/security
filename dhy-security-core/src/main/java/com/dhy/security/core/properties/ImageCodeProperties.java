@@ -4,7 +4,7 @@ package com.dhy.security.core.properties;
  * 图形验证码配置类
  * @author VGhostHunter
  */
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
 
     // 验证码字符集
     public static final char[] chars = {
@@ -14,8 +14,10 @@ public class ImageCodeProperties {
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
             'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 
-    // 字符数量
-    private int num = 4;
+    public ImageCodeProperties() {
+        setLength(4);
+    }
+
     // 干扰线数量
     private int lines = 3;
     // 宽度
@@ -24,18 +26,8 @@ public class ImageCodeProperties {
     private int height = 23;
     // 字体大小
     private int fontSize = 20;
-    //过期时间
-    private int expireIn = 60;
 
     private String url;
-
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
 
     public int getLines() {
         return lines;
@@ -67,14 +59,6 @@ public class ImageCodeProperties {
 
     public void setFontSize(int fontSize) {
         this.fontSize = fontSize;
-    }
-
-    public int getExpireIn() {
-        return expireIn;
-    }
-
-    public void setExpireIn(int expireIn) {
-        this.expireIn = expireIn;
     }
 
     public String getUrl() {

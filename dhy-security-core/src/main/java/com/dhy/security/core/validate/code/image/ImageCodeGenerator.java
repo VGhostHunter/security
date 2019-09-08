@@ -1,7 +1,8 @@
-package com.dhy.security.core.validate.code;
+package com.dhy.security.core.validate.code.image;
 
 import com.dhy.security.core.properties.ImageCodeProperties;
 import com.dhy.security.core.properties.SecurityProperties;
+import com.dhy.security.core.validate.code.ValidateCodeGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
@@ -23,7 +24,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
         StringBuffer sb = new StringBuffer();
         int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width", securityProperties.getCode().getImage().getWidth());
         int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height", securityProperties.getCode().getImage().getHeight());
-        int num = securityProperties.getCode().getImage().getNum();
+        int num = securityProperties.getCode().getImage().getLength();
         int fontSize = securityProperties.getCode().getImage().getFontSize();
         int lines = securityProperties.getCode().getImage().getLines();
         // 1.创建空白图片
