@@ -1,0 +1,30 @@
+spring:
+  session:
+    store-type: none
+  datasource:
+    username: root
+    password: 111
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/security?useUnicode=true&characterEncoding=utf8&useSSL=false
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#logging:
+#  level:
+#    com.dhy.web: debug
+
+dhy:
+  security:
+#    browser:
+#      LoginType: REDIRECT
+#      loginPage: /demo-login.html
+    code:
+      image:
+        num: 4
+        width: 300
+#        url: /user,/user/*
