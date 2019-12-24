@@ -7,7 +7,7 @@ trigger:
 - dev
 
 pool:
-  vmImage: 'centos-latest'
+  vmImage: 'ubuntu-16.04'
 
 steps:
 - task: Maven@3
